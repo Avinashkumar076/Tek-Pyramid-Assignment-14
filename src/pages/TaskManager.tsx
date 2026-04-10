@@ -40,7 +40,11 @@ export default function TaskManager() {
         <div className="text-sm text-gray-300">{tasks.length} tasks</div>
       </div>
 
-      <TaskForm onSubmit={handleSubmit} editingTask={editingTask} />
+      <TaskForm
+        key={editingTask ? editingTask.id : "new"}
+        editingTask={editingTask}
+        onSubmit={handleSubmit}
+      />
 
       <div className="flex gap-2 bg-white/10 backdrop-blur-md p-1 rounded-lg w-fit border border-white/10">
         {filters.map((f) => (

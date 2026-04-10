@@ -6,12 +6,22 @@ interface Props {
   editingTask: Task | null;
 }
 
+const initialState: Omit<Task, "id"> = {
+  title: "",
+  description: "",
+  status: "todo",
+};
+
 export default function TaskForm({ onSubmit, editingTask }: Props) {
-  const [formData, setFormData] = useState<Omit<Task, "id">>({
-    title: editingTask?.title || "",
-    description: editingTask?.description || "",
-    status: editingTask?.status || "todo",
-  });
+  const [formData, setFormData] = useState<Omit<Task, "id">>(
+    editingTask
+      ? {
+          title: editingTask.title,
+          description: editingTask.description,
+          status: editingTask.status,
+        }
+      : initialState,
+  );
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -36,11 +46,7 @@ export default function TaskForm({ onSubmit, editingTask }: Props) {
 
     onSubmit(formData, editingTask?.id);
 
-    setFormData({
-      title: "",
-      description: "",
-      status: "todo",
-    });
+    setFormData(initialState);
   };
 
   return (
